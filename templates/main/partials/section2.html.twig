@@ -1,0 +1,47 @@
+<div class='container-fluid section-even py-5'>
+	<div class='row'>
+		<div class='col-12'>
+			<h2 class='text-center text-5xl font-bold tracking-normal mb-4'>Et après l'événement ?</h2>
+		</div>
+	</div>
+	<div class='row gap-5 justify-content-center'>
+		{% for item in [
+            {
+                'id': 1,
+                'image': 'https://storage.googleapis.com/asset_section_image_production/zcd672lqasmra2txust5jty20gh8',
+                'title': 'Galerie photo en ligne',
+                'description': "Revivez votre événement en consultant la galerie photo privée en ligne pour récupérer toutes (oui oui, toutes) les photos de vos invités et leur partager à l’issue de votre événement"
+            },
+            {
+                'id': 2,
+                'image': 'https://storage.googleapis.com/asset_section_image_production/366m62fq7i750a7bcgrsmr6ktpu7',
+                'title': 'Pour vous : un album photo',
+                'description': 'Un album photo Cheerz offert pour vous souvenir de votre événement toute votre vie'
+            },
+            {
+                'id': 3,
+                'image': 'https://storage.googleapis.com/asset_section_image_production/g8ocd4668uwqe7gtb65f7bdvfoky',
+                'title': 'Pour vos invités : des tirages photo personnalisés',
+                'description': 'Chaque invité peut ré-imprimer ses 20 photos favorites depuis l’application ou le site Cheerz (hors frais de port)'
+            },
+        ] %}
+			<div class='col-12 col-md-5 col-xl-3 {% if item.id is not same as(2) %} padding-section2 {% endif %}'>
+				<div class='rounded-lg'>
+					<div class='rounded-xl ratio ratio-1x1' style='background-image: url({{ item.image }}); background-size: cover'>
+						<div class='h-5'>
+							<p class='d-flex content-center justify-center text-2xl font-bold rounded-2xl w-10 h-10 relative -top-5 bg-primaryGreen ml-5'>{{item.id}}</p>
+						</div>
+					</div>
+					<div class='pt-3'>
+						<h3 class='mb-2 text-center text-2xl font-bold tracking-normal leading-tight'>
+							{{item.title}}
+						</h3>
+						<p class='mb-4 text-center text-base tracking-normal'>
+							{{item.description}}
+						</p>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+</div>

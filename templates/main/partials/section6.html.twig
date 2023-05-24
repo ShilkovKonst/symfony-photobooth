@@ -1,0 +1,51 @@
+<div class='container-fluid section-even py-5'>
+	<div class='row'>
+		<div class='col-12'>
+			<h2 class='text-center text-5xl font-bold tracking-normal mb-4'>Avez-vous des questions ?</h2>
+		</div>
+	</div>
+	<div class='row'>
+		<div class="accordion" id="accordionPanelsStayOpenExample">
+			{% for item in [
+            {
+                'id': 1,
+                'title': 'Comment fonctionnent les forfaits incluant les impressions instantanées ?',
+                'body': 'Avec les forfaits incluant les impressions instantanées, vous pouvez imprimer vos photos directement depuis la borne photo en un ou plusieurs exemplaires et en une dizaine de secondes. Les forfaits comprennent une imprimante photo professionnelle intégrée qui vous délivrera des clichés de grande qualité digne d’un studio photo.'
+            },
+            {
+                'id': 2,
+                'title': 'Comment peut-on profiter des impressions en bandelettes ?',
+                'body': 'Lors de la personnalisation de vos cadres photos depuis votre espace client, vous pouvez choisir un ou plusieurs formats de cadres pour vos photos, notamment le format bandelettes. Un mix de formats est tout à fait possible en sélectionnant un cadre paysage ou portrait en plus d’un cadre bandelettes.'
+            },
+            {
+                'id': 3,
+                'title': 'Pourquoi y a-t-il le double d’impressions au format bandelettes ?',
+                'body': 'En choisissant uniquement le format bandelettes pour vos cadres photos (5×15 et 15×5) lors de la personnalisation, vous doublez le nombre d’impressions de votre forfait. En effet, les bandelettes s’impriment toujours par 2, décomptées comme une seule photo (2 bandelettes identiques à chaque fois).'
+            },
+            {
+                'id': 4,
+                'title': 'Quelles sont les caractéristiques du forfait 100% digital ?',
+                'body': 'Avec le forfait 100% digital, vous pouvez profiter des photos digitales en illimité. Ce forfait est idéal lorsque vous ne souhaitez pas imprimer vos tirages en direct depuis le photobooth. Il vous offre néanmoins les mêmes avantages que les forfaits avec impressions instantanées, notamment l’utilisation de la borne tout au long de votre événement (durée libre), la personnalisation des cadres, l’envoi des photos par e-mail (en direct ou en différé), une galerie en ligne sécurisée et une assurance en cas de casse incluse.'
+            },
+            {
+                'id': 5,
+                'title': 'Comment personnaliser les cadres photos ?',
+                'body': 'La personnalisation des cadres photo est incluse dans tous nos forfaits. Vous pouvez sélectionner jusqu’à 24 mises en page de cadres dans plusieurs formats lors de la personnalisation depuis votre espace client. Après votre événement, vous recevrez un lien vers votre galerie en ligne sécurisée contenant l’ensemble des photos qui auront été prises durant votre événement. Vous pourrez alors les télécharger et les partager avec vos invités.'
+            }
+        ] %}
+				<div class="accordion-item">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{item.id}}" aria-expanded="true" aria-controls="panelsStayOpen-collapse{{item.id}}">
+							{{item.title}}
+						</button>
+					</h2>
+					<div id="panelsStayOpen-collapse{{item.id}}" class="accordion-collapse collapse">
+						<div class="accordion-body">
+							{{item.body}}
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</div></div></div>

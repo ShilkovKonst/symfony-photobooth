@@ -1,0 +1,42 @@
+<div class='container-fluid section-uneven py-5'>
+	<div class='row'>
+		<div class='col-12'>
+			<h2 class='text-center text-5xl font-bold tracking-normal mb-4'>On pourra venir à votre soirée ?</h2>
+			<p>Idéal pour tous vos événements : que ce soit pour un mariage, un anniversaire ou une baby shower, cette animation photo avec impression instantanée saura faire l’unanimité parmi vos invités. Donnez à votre grand jour l’éclat qu’il mérite et revivez-le à l’infini à travers des impressions et des cadeaux photos personnalisés pour vous et vos invités. Parce que vous prendrez toujours plaisir à vous replonger dans les souvenirs de moments heureux, Capt My Events sera toujours là pour les capturer.</p>
+		</div>
+	</div>
+	<div class='row gap-md-5 justify-content-center'>
+		{% for item in [
+            {
+                'id': 1,
+                'path': 'https://images.unsplash.com/photo-1525268771113-32d9e9021a97?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80',
+                'title': 'Location Photobooth mariage',
+                'description': 'Avec le Photobooth Capt My Events, vous aurez le plaisir de découvrir le récit détaillé des coulisses de cette soirée inoubliable. Et ce n’est pas tout ! Chaque invité repartira avec une ou plusieurs photos souvenir qui resteront des années sur leur frigo.'
+            },
+            {
+                'id': 2,
+                'path': 'https://images.unsplash.com/photo-1537026952880-102669376468?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=776&q=80',
+                'title': 'Location Photobooth anniversaire',
+                'description': '30 ans, 40 ans, 50 ans etc. Il y a des anniversaires qui comptent plus que d’autres. Pour marquer le coup, pourquoi ne pas surprendre vos invités avec un Photobooth Capt My Events ? L’occasion pour eux de vous laisser de belles grimaces en cadeau.'
+            },
+            {
+                'id': 3,
+                'path': 'https://images.unsplash.com/photo-1541532713592-79a0317b6b77?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=776&q=80',
+                'title': 'Location Photobooth soirée',
+                'description': 'Elle vous volera presque la vedette : ambiance de folie garantie à votre soirée avec le Photobooth Capt My Events ! Avec sa prise de photo illimitée, il n’y aura pas de limite aux concours de poses les plus excentriques !'
+            }
+        ] %}
+			<div class='col-12 col-md-5 col-xl-3'>
+				<div class="card">
+					<a class="card-body text-decoration-none text-reset">
+						<h5 class="card-title">{{item.title}}</h5>
+						<p class="card-text text-decoration-none">{{item.description}}</p>
+						<div class='ratio ratio-1x1'>
+							<img src={{ item.path }} class="card-img-bottom " alt="...">
+						</div>
+					</a>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+</div></div></div>

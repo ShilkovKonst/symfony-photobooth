@@ -1,0 +1,60 @@
+<div class='container-fluid section-even py-5'>
+	<div class='row'>
+		<div class='col-12'>
+			<h2 class='text-center text-5xl font-bold tracking-normal mb-4'>A vous (ou à nous) de jouer !</h2>
+			<p>Affichez fièrement le thème de votre événement en choisissant parmi plus de 50 graphismes prédéfinis ou lancez-vous dans votre propre création sur la base de fichiers gabarits au format PSD.</p>
+		</div>
+	</div>
+	<div class='row'>
+		<div class='col-12'>
+			<div id="my-keen-slider-1" class="keen-slider">
+				{% for item in [
+            {
+                'id': 1,
+                'path': './media/images/carousels/Image1.jpeg'
+            },
+            {
+                'id': 2,
+                'path': './media/images/carousels/Image2.jpeg'
+            },
+            {
+                'id': 3,
+                'path': './media/images/carousels/Image3.jpeg'
+            },
+			{
+                'id': 4,
+                'path': './media/images/carousels/Image4.jpeg'
+            },
+            {
+                'id': 5,
+                'path': './media/images/carousels/Image5.jpeg'
+            },
+            {
+                'id': 6,
+                'path': './media/images/carousels/Image6.jpeg'
+            },
+            {
+                'id': 7,
+                'path': './media/images/carousels/Image7.jpeg'
+            },
+            {
+                'id': 8,
+                'path': './media/images/carousels/Image8.jpeg'
+            },
+            {
+                'id': 9,
+                'path': './media/images/carousels/Image9.jpeg'
+            },
+            {
+                'id': 10,
+                'path': './media/images/carousels/Image10.jpeg'
+            }
+        ] %}
+					<div class="keen-slider__slide number-slide{{item.id}}">
+						<img src={{ item.path }} class="ratio ratio-1x1" alt="...">
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div></div></div>

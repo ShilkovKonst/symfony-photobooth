@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ReservationController!
+{% endblock %}
+
+{% block body %}
+	<div class='container-fluid section-even p-6'>
+		<div class='row'>
+			<div class='col-12'>
+				<form>
+					<div class="mb-3">
+						<label for="eventDate" class="form-label">Pick a date</label>
+						<input type="text" name='eventDate' class="form-control" id="eventDate" data-min-date='{{ minDate|date('Y-m-d') }}' data-blocked-dates='["2023-05-27", "2023-05-28" ]'>
+					</div>
+					<div class="mb-3">
+						<select class="form-select" aria-label="Default select example" name='eventZip'>
+							<option value='' selected disabled>Choisir un code postal et ville</option>
+							{% for i in zipCodes %}
+								<option value={{ i.codesPostaux[0] }}>{{ i.codesPostaux[0] }}
+									{{ i.nom }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

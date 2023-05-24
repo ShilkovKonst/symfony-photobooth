@@ -1,0 +1,30 @@
+<div id='carousel0' class='position-relative overflow-hidden'>
+	<div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+		<div class="carousel-inner position-absolute top-50 start-50 translate-middle">
+			{% for item in [
+            {
+                'id': 1,
+                'path': './media/images/carousels/photo_2023-05-18_22-17-46.jpg'
+            },
+            {
+                'id': 2,
+                'path': './media/images/carousels/photo_2023-05-18_22-18-38.jpg'
+            },
+            {
+                'id': 3,
+                'path': './media/images/carousels/photo_2023-05-18_22-18-42.jpg'
+            }
+        ] %}
+				<div class="carousel-item {% if item.id is same as(1) %} active {% endif %}">
+					<img src={{ item.path }} class="d-block w-100" alt="...">
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+	<div class="position-absolute content d-flex flex-column align-items-center p-5 p-md-5">
+		<h1>Heading</h1>
+		<p>Lorem ipsum...</p>
+		<!-- Use a button to pause/play the video with JavaScript -->
+		<button id="myBtn" onclick="myFunction()">Pause</button>
+	</div>
+</div>
