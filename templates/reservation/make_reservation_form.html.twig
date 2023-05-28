@@ -2,22 +2,31 @@
 
 {% block title %}Hello ReservationController!
 {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('flatpickr') }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+	{{ encore_entry_script_tags('flatpickr') }}
+{% endblock %}
 
 {% block body %}
+{% set eventZip = null %}
+{% set eventCity = null %}
 	<div class='container-fluid section-even p-6'>
 		<div class='row'>
 			<div class='col-12'>
-				<form>
+				<form action="{{ path('app_make_reservation_submitted') }}" method="POST">
 					<div class="mb-3">
 						<label for="eventDate" class="form-label">Pick a date</label>
 						<input type="text" name='eventDate' class="form-control" id="eventDate" data-min-date='{{ minDate|date('Y-m-d') }}' data-blocked-dates='["2023-05-27", "2023-05-28" ]'>
 					</div>
 					<div class="mb-3">
-						<select class="form-select" aria-label="Default select example" name='eventZip'>
-							<option value='' selected disabled>Choisir un code postal et ville</option>
+						<select class="form-select js-example-basic-single" aria-label="Default select example" name='eventZip'>
+							<option value='' selected disabled>Choisir un code postal</option>
 							{% for i in zipCodes %}
-								<option value={{ i.codesPostaux[0] }}>{{ i.codesPostaux[0] }}
-									{{ i.nom }}</option>
+								<option value="{{ i.codesPostaux[0] }} | {{ i.nom }}">{{ i.codesPostaux[0] }} |	{{ i.nom }}</option>
 							{% endfor %}
 						</select>
 					</div>

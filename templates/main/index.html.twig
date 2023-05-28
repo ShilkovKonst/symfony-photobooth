@@ -2,6 +2,14 @@
 
 {% block title %}Hello MainController!
 {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('keen_slider') }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+	{{ encore_entry_script_tags('keen_slider') }}
+{% endblock %}
 
 {% block body %}
 	{% include "./main/partials/section0.html.twig" %}

@@ -16,11 +16,9 @@ class CreateReservationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('eventDate', DateType::class)
             ->add('eventType', TextType::class)
             ->add('addEventType', TextType::class)
             ->add('isTermsAccepted', CheckboxType::class)
-            ->add('eventZip')
             ->add('eventCity', TextType::class)
             ->add('eventAddress', TextType::class)
             ->add(

@@ -12,5 +12,6 @@ import './styles/app.css';
 import './bootstrap';
 
 import 'bootstrap/dist/js/bootstrap.min.js';
-import './keen_slider'
-import './flatpickr'
+import './select2'
+// import './keen_slider'
+// import './flatpickr'

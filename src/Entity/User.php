@@ -6,11 +6,14 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -19,6 +22,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\Regex(pattern: "/^[^\s@]+@[^\s@]+\.[^\s@]+$/", message: "The email '{{ value }}' is not a valid format.")]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -28,6 +32,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\Regex(pattern: "/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@\$!%*#?&])[A-Za-z\d@\$!%*#?&]{8,}$/", message: "The password should contain at least 8 characters, at least one alphabetic character, one digit, and one special character from the set @$!%*#?&")]
     private ?string $password = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Reservation::class)]
@@ -38,6 +43,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Image::class, orphanRemoval: true)]
     private Collection $images;
+
+    #[ORM\Column(length: 255)]
+    private ?string $firstName = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $lastName = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\Regex(pattern: "/^(?:\+33|0)(?:\d{9}|\d{1,2}(?:\d{2}){3})$/", message: "The phone number '{{ value }}' is not a valid format.")]
+    private ?string $mobTel = null;
+
+    #[ORM\Column]
+    private ?bool $isEmailVerified = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $avatar = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $zipCode = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $city = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $street = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $buildNumber = null;
 
     public function __construct()
     {
@@ -202,6 +235,114 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $image->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getMobTel(): ?string
+    {
+        return $this->mobTel;
+    }
+
+    public function setMobTel(string $mobTel): self
+    {
+        $this->mobTel = $mobTel;
+
+        return $this;
+    }
+
+    public function isIsEmailVerified(): ?bool
+    {
+        return $this->isEmailVerified;
+    }
+
+    public function setIsEmailVerified(bool $isEmailVerified): self
+    {
+        $this->isEmailVerified = $isEmailVerified;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getZipCode(): ?string
+    {
+        return $this->zipCode;
+    }
+
+    public function setZipCode(string $zipCode): self
+    {
+        $this->zipCode = $zipCode;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getStreet(): ?string
+    {
+        return $this->street;
+    }
+
+    public function setStreet(string $street): self
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    public function getBuildNumber(): ?string
+    {
+        return $this->buildNumber;
+    }
+
+    public function setBuildNumber(string $buildNumber): self
+    {
+        $this->buildNumber = $buildNumber;
 
         return $this;
     }

@@ -24,6 +24,8 @@
     "dependencies": {
         "date-fns": "^2.30.0",
         "flatpickr": "^4.6.13",
-        "keen-slider": "^6.8.5"
+        "jquery": "^3.7.0",
+        "keen-slider": "^6.8.5",
+        "select2": "^4.1.0-rc.0"
     }
 }

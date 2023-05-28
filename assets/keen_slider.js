@@ -1,3 +1,4 @@
+import "./styles/keen-slider.css";
 import KeenSlider from "keen-slider";
 
 function navigation(slider) {
@@ -94,58 +95,78 @@ function navigation(slider) {
   });
 }
 
-
-var sliderElement1 = document.getElementById("my-keen-slider-1");
-if (sliderElement1) {
-  var slider1 = new KeenSlider(
-    "#my-keen-slider-1",
-    {
-      loop: true,
-      breakpoints: {
-        "(min-width: 1200px)": {
-          slides: {
-            perView: 3,
-            spacing: 10,
-          },
+var slider1 = new KeenSlider(
+  "#my-keen-slider-1",
+  {
+    loop: true,
+    breakpoints: {
+      "(min-width: 1024px)": {
+        slides: {
+          perView: 3,
+          spacing: 10,
         },
-        "(max-width: 1199px)": {
-          slides: {
-            perView: 2,
-            spacing: 5,
-          },
+      },
+      "(max-width: 1023px)": {
+        slides: {
+          perView: 2,
+          spacing: 5,
         },
-        "(max-width: 767px)": {
-          slides: {
-            perView: 1,
-            spacing: 0,
-          },
+      },
+      "(max-width: 767px)": {
+        slides: {
+          perView: 1,
+          spacing: 0,
         },
       },
     },
-    [navigation]
-  );
-}
-var sliderElement2 = document.getElementById("my-keen-slider-1");
-if (sliderElement2) {
-  var slider2 = new KeenSlider(
-    "#my-keen-slider-2",
-    {
-      loop: true,
-      breakpoints: {
-        "(min-width: 1200px)": {
-          slides: {
-            perView: 2,
-            spacing: 10,
-          },
+  },
+  [navigation]
+);
+var slider2 = new KeenSlider(
+  "#my-keen-slider-2",
+  {
+    loop: true,
+    breakpoints: {
+      "(min-width: 1200px)": {
+        slides: {
+          perView: 2,
+          spacing: 10,
         },
-        "(max-width: 767px)": {
-          slides: {
-            perView: 1,
-            spacing: 0,
-          },
+      },
+      "(max-width: 767px)": {
+        slides: {
+          perView: 1,
+          spacing: 0,
         },
       },
     },
-    [navigation]
-  );
-}
+  },
+  [navigation]
+);
+var slider3 = new KeenSlider(
+  "#my-keen-slider-3",
+  {
+    breakpoints: {
+      "(min-width: 1024px)": {
+        slides: {
+          perView: 3,
+          spacing: 50,
+        },
+      },
+      "(max-width: 1023px)": {
+        slides: {
+          perView: 2,
+          spacing: 50,
+        },
+      },
+      "(max-width: 767px)": {
+        slides: {
+          perView: 1,
+          spacing: 0,
+        },
+      },
+    },
+  },
+  []
+);
+// }

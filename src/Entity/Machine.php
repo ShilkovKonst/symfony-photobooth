@@ -26,7 +26,7 @@ class Machine
     private ?string $description = null;
 
     #[ORM\Column]
-    private ?bool $isAvailable = null;
+    private ?bool $isAvailable = true;
 
     #[ORM\Column(nullable: true)]
     private array $reservedDates = [];
