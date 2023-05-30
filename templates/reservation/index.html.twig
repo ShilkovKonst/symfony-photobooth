@@ -12,7 +12,7 @@
 {% endblock %}
 {# <div class=' text-red-600'>{errorMessages.selectedPlanError}</div> #}
 {% block body %}
-	<div class='container-fluid section-even py-6 px-3 px-md-5'>
+	<div class='container-fluid section-uneven py-6 px-3 px-md-5'>
 		<div class='row'>
 			<h2 class='text-4xl font-bold text-center mb-5'>Immortalisez vos événements avec notre photobooth à prix abordable</h2>
 		</div>
@@ -71,7 +71,7 @@
 											Galerie web sécurisée
 										</li>
 										<li class="mb-4 d-flex align-items-center fs-5 gap-2">
-											<button type="button" class="btn w-100 {% if plan.product.name == 'Standard Plan' %} btn-primary {% elseif plan.product.name == 'Premium Plan' %} btn-secondary {% elseif plan.product.name == 'Gold Plan' %} btn-warning {% endif %}">Primary</button>
+											<a href="/make-reservation/{{ plan.id }}" type="button" class="btn w-100 {% if plan.product.name == 'Standard Plan' %} btn-primary {% elseif plan.product.name == 'Premium Plan' %} btn-secondary {% elseif plan.product.name == 'Gold Plan' %} btn-warning {% endif %}">Primary</a>
 										</li>
 									</ul>
 								</div>

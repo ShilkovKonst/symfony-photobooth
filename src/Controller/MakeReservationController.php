@@ -14,20 +14,28 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class MakeReservationController extends AbstractController
 {
+    private $stripe; 
+    private $plans;
+
+    public function __construct()
+    {
+        $this->stripe = new StripeClient($_ENV["STRIPE_SECRET_KEY"]);
+        $this->plans = $this->stripe->prices->all(['expand' => ['data.product']]);
+    }
     #[Route('/choose-plan', name: 'app_choose_plan')]
     public function index(): Response
     {
-        $stripe = new StripeClient($_ENV["STRIPE_SECRET_KEY"]);
-        $plans = $stripe->prices->all(['expand' => ['data.product']]);
+        // $plans = $this->stripe->prices->all(['expand' => ['data.product']]);
         // dd($plans->data);
         return $this->render('reservation/index.html.twig', [
-            'plans' => $plans->data,
+            'plans' => $this->plans->data,
         ]);
     }
 
-    #[Route('/make-reservation', name: 'app_make_reservation')]
-    public function createReservation(): Response
+    #[Route('/make-reservation/{planId}', name: 'app_make_reservation')]
+    public function createReservation($planId): Response
     {
+        // $plan=$this->stripe->prices->retrieve($planId);
         $currentDate = new DateTime();
         $minDate = $currentDate->modify('+2 days');
         $client = HttpClient::create();
@@ -63,7 +71,9 @@ class MakeReservationController extends AbstractController
 
             return $this->render('reservation/make_reservation_form.html.twig', [
                 'zipCodes' => $finalData,
-                'minDate' => $minDate
+                'minDate' => $minDate,
+                'plans' => $this->plans,
+                'chosen_plan' => $planId
             ]);
         } catch (TransportExceptionInterface $e) {
             $errorMessage = $e->getMessage();

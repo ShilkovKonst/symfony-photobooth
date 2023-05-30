@@ -3,36 +3,57 @@
 {% block title %}Hello ReservationController!
 {% endblock %}
 {% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('flatpickr') }}
+	{{ parent() }}
+	{{ encore_entry_link_tags('flatpickr') }}
 {% endblock %}
 {% block javascripts %}
-    {{ parent() }}
+	{{ parent() }}
 	{{ encore_entry_script_tags('flatpickr') }}
 {% endblock %}
 
 {% block body %}
-{% set eventZip = null %}
-{% set eventCity = null %}
-	<div class='container-fluid section-even p-6'>
-		<div class='row'>
-			<div class='col-12'>
-				<form action="{{ path('app_make_reservation_submitted') }}" method="POST">
-					<div class="mb-3">
-						<label for="eventDate" class="form-label">Pick a date</label>
-						<input type="text" name='eventDate' class="form-control" id="eventDate" data-min-date='{{ minDate|date('Y-m-d') }}' data-blocked-dates='["2023-05-27", "2023-05-28" ]'>
-					</div>
-					<div class="mb-3">
-						<select class="form-select js-example-basic-single" aria-label="Default select example" name='eventZip'>
-							<option value='' selected disabled>Choisir un code postal</option>
+	<div class='container-fluid section-even py-6 px-5 '>
+		<form action="{{ path('app_make_reservation_submitted') }}" method="POST">
+			<div class='row'>
+				<div class="d-flex flex-column flex-md-row justify-content-evenly">
+					{% for plan in plans %}
+						<input type="radio" class="btn-check" name='eventPlan' id="{{ plan.product.name }}" {% if plan.id == chosen_plan %} checked {% endif %} autocomplete="off">
+						<label class="btn {% if plan.product.name == 'Standard Plan' %} btn-outline-primary {% elseif plan.product.name == 'Premium Plan' %} btn-outline-secondary {% elseif plan.product.name == 'Gold Plan' %} btn-outline-warning {% endif %}" for="{{ plan.product.name }}">
+							<h4 class='p-3 text-center'>
+								<p class="text-uppercase fs-5 mb-4">
+									<strong>{{ plan.product.name }}</strong>
+								</p>
+								<p class="fs-5">
+									<strong>{{ (plan.unit_amount / 100)|number_format(2, '.', ' ') ~ ' €' }}</strong>
+								</p>
+							</h4>
+						</label>
+					{% endfor %}
+				</div>
+			</div>
+			<div class='mb-3 row justify-content-center'>
+				<div class="w-25">
+					<label for="eventDate" class="form-label">Pick a date</label>
+					<input type="text" name='eventDate' class="form-control" id="eventDate" data-min-date='{{ minDate|date('Y-m-d') }}' data-blocked-dates='["2023-05-27", "2023-05-28" ]'>
+				</div>
+				<div class="w-50">
+					<label for="eventZip" class="form-label">Choisir un code postal
+					</label>
+						<select class="form-control js-example-basic-single" aria-label="Default select example" name='eventZip' style="width: 100%; height: 38px">
+							<option value='' selected disabled></option>
 							{% for i in zipCodes %}
-								<option value="{{ i.codesPostaux[0] }} | {{ i.nom }}">{{ i.codesPostaux[0] }} |	{{ i.nom }}</option>
+								<option value="{{ i.codesPostaux[0] }} | {{ i.nom }}">
+									{{ i.codesPostaux[0] }}
+									|
+									{{ i.nom }}
+								</option>
 							{% endfor %}
 						</select>
-					</div>
-					<button type="submit" class="btn btn-primary">Submit</button>
-				</form>
+				</div>
+				</div>
+				<div class='mb-3 row justify-content-center'>					
+				<button type="submit" class="btn btn-primary">Submit</button>
 			</div>
-		</div>
+		</form>
 	</div>
 {% endblock %}

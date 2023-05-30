@@ -10,7 +10,18 @@
 body {
   min-width: 320px;
 }
-
+.select2-container .select2-selection--single,
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 38px;
+}
+.select2-container .select2-selection--single {
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  line-height:normal;
+  padding-left: 0;
+}
 /* Style the video: 100% width and height to cover the entire window */
 @media screen and (min-width: 320px) {
   #carousel0 {
