@@ -1,13 +1,11 @@
-import './styles/flatpickr.css'
+import '../styles/flatpickr.css'
 import flatpickr from "flatpickr";
 
-var blockedDates = JSON.parse(
+var blockedDates = Object.values(JSON.parse(
   document.getElementById("eventDate").dataset.blockedDates
-);
+));
 var minDate = document.getElementById("eventDate").dataset.minDate;
 
-// var flatpickrElement = document.getElementById("eventDate");
-// if (flatpickrElement) {
   flatpickr("#eventDate", {
     allowInput: true,
     onOpen: function (selectedDates, dateStr, instance) {
@@ -21,4 +19,3 @@ var minDate = document.getElementById("eventDate").dataset.minDate;
     dateFormat: "Y-m-d",
     minDate: minDate,
   });
-// }

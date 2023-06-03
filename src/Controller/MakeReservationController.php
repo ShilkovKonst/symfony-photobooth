@@ -3,18 +3,18 @@
 namespace App\Controller;
 
 use DateTime;
+use DateTimeZone;
 use Stripe\StripeClient;
+use App\Repository\ReservedDatesRepository;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class MakeReservationController extends AbstractController
 {
-    private $stripe; 
+    private $stripe;
     private $plans;
 
     public function __construct()
@@ -33,53 +33,29 @@ class MakeReservationController extends AbstractController
     }
 
     #[Route('/make-reservation/{planId}', name: 'app_make_reservation')]
-    public function createReservation($planId): Response
+    public function createReservation($planId, ReservedDatesRepository $reservedDatesRepo): Response
     {
-        // $plan=$this->stripe->prices->retrieve($planId);
         $currentDate = new DateTime();
-        $minDate = $currentDate->modify('+2 days');
-        $client = HttpClient::create();
-        $url = 'https://geo.api.gouv.fr/communes?codeRegion=11&fields=codesPostaux';
-        try {
-            $response = $client->request('GET', $url);
-            $dataRaw = $response->getContent();
-            $data = json_decode($dataRaw, true);
-            // $zipCodesRaw=array_column($data, 'codesPostaux');
-            // $zipCodes=array_merge(...$zipCodesRaw);
-            $modifiedData = array_map(function ($item) {
-                $codesPostaux = $item['codesPostaux'];
-                $nom = $item['nom'];
-                // Создание новых объектов для каждого индекса
-                $result = [];
-                if (count($codesPostaux) > 1) {
-                    foreach ($codesPostaux as $index) {
-                        $result[] = [
-                            'codesPostaux' => [$index],
-                            'nom' => $nom
-                        ];
-                    }
-                } else {
-                    $result[] = [
-                        'codesPostaux' => [$codesPostaux[0]],
-                        'nom' => $nom
-                    ];
-                }
-                return $result;
-            }, $data);
-            $finalData = array_merge(...$modifiedData);
-            // dd(json_encode($finalData, true));
+        $currentDate->setTimezone(new DateTimeZone('Europe/Paris'));
+        $minDate = $currentDate->modify('+2 days')->format('Y-m-d');
+        $reservedDatesRaw = $reservedDatesRepo->findAll();
+        $reservedDates = array_map(function ($date) {
+            return $date->getDates();      
+        }, $reservedDatesRaw);
+        $reservedDates = array_merge(...$reservedDates);
+        $actualDates = array_filter($reservedDates, function ($item) use ($minDate) { return $item >= $minDate; });
+        // dd(array_merge($reservedDates), $actualDates, $minDate, $currentDate);
 
-            return $this->render('reservation/make_reservation_form.html.twig', [
-                'zipCodes' => $finalData,
-                'minDate' => $minDate,
-                'plans' => $this->plans,
-                'chosen_plan' => $planId
-            ]);
-        } catch (TransportExceptionInterface $e) {
-            $errorMessage = $e->getMessage();
-            // dd($errorMessage);
-        }
+        return $this->render('reservation/make_reservation_form.html.twig', [
+            'zipCodes' => $this->getAllCodesPostaux(),
+            'reservedDates' => json_encode($actualDates),
+            'minDate' => $minDate,
+            'plans' => $this->plans,
+            'chosen_plan' => $planId,
+            'types' => ['Mariage', 'Anniversaire', 'Soirée', 'Autre']
+        ]);
     }
+
     #[Route('/make-reservation/submitted', name: 'app_make_reservation_submitted')]
     public function ddZipAndCity(Request $request): Response
     {
@@ -89,5 +65,42 @@ class MakeReservationController extends AbstractController
         $zip = $outputZip[0];
         $city = $outputZip[2];
         dd($zip, $city, $date);
+        return $this->render(
+            'main/index.html.twig'
+
+        );
+    }
+
+    private function getAllCodesPostaux(): array
+    {
+        $client = HttpClient::create();
+        $url = 'https://geo.api.gouv.fr/communes?codeRegion=11&fields=codesPostaux';
+        $response = $client->request('GET', $url);
+        $dataRaw = $response->getContent();
+        $data = json_decode($dataRaw, true);
+        // $zipCodesRaw=array_column($data, 'codesPostaux');
+        // $zipCodes=array_merge(...$zipCodesRaw);
+        $modifiedData = array_map(function ($item) {
+            $codesPostaux = $item['codesPostaux'];
+            $nom = $item['nom'];
+            // Создание новых объектов для каждого индекса
+            $result = [];
+            if (count($codesPostaux) > 1) {
+                foreach ($codesPostaux as $codePostal) {
+                    $result[] = [
+                        'codesPostaux' => [$codePostal],
+                        'nom' => $nom
+                    ];
+                }
+            } else {
+                $result[] = [
+                    'codesPostaux' => [$codesPostaux[0]],
+                    'nom' => $nom
+                ];
+            }
+            return $result;
+        }, $data);
+
+        return array_merge(...$modifiedData);
     }
 }

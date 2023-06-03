@@ -5,22 +5,35 @@
 {% block stylesheets %}
 	{{ parent() }}
 	{{ encore_entry_link_tags('flatpickr') }}
+	{{ encore_entry_link_tags('select2') }}
 {% endblock %}
 {% block javascripts %}
 	{{ parent() }}
 	{{ encore_entry_script_tags('flatpickr') }}
+	{{ encore_entry_script_tags('select2') }}
+	{{ encore_entry_script_tags('eventTypePicker') }}
 {% endblock %}
 
 {% block body %}
-	<div class='container-fluid section-even py-6 px-5 '>
-		<form action="{{ path('app_make_reservation_submitted') }}" method="POST">
-			<div class='row'>
-				<div class="d-flex flex-column flex-md-row justify-content-evenly">
+	<div class='container-fluid section-uneven py-7'>
+		<div class="row">
+			<h2 class="d-flex flex-column align-items-center">
+				<p>
+					<strong>Réserver du Photobooth</strong>
+				</p>
+				<p>
+					<strong>Capt My Events</strong>
+				</p>
+			</h2>
+		</div>
+		<form class="vpx-5 vpx-md-15 vpx-lg-25 vpx-xxl-30" action="{{ path('app_make_reservation_submitted') }}" method="POST">
+			<div class='row mb-3'>
+				<div class="d-flex flex-column flex-md-row justify-content-between gap-3">
 					{% for plan in plans %}
-						<input type="radio" class="btn-check" name='eventPlan' id="{{ plan.product.name }}" {% if plan.id == chosen_plan %} checked {% endif %} autocomplete="off">
-						<label class="btn {% if plan.product.name == 'Standard Plan' %} btn-outline-primary {% elseif plan.product.name == 'Premium Plan' %} btn-outline-secondary {% elseif plan.product.name == 'Gold Plan' %} btn-outline-warning {% endif %}" for="{{ plan.product.name }}">
-							<h4 class='p-3 text-center'>
-								<p class="text-uppercase fs-5 mb-4">
+						<input type="radio" class="btn-check" name='eventPlan' value="{{ plan.id }}" id="{{ plan.product.name }}" {% if plan.id == chosen_plan %} checked {% endif %} autocomplete="off">
+						<label class="btn w-md-30 {% if plan.product.name == 'Standard Plan' %} btn-outline-primary {% elseif plan.product.name == 'Premium Plan' %} btn-outline-secondary {% elseif plan.product.name == 'Gold Plan' %} btn-outline-warning {% endif %}" for="{{ plan.product.name }}">
+							<h4 class='text-center'>
+								<p class="text-uppercase fs-5">
 									<strong>{{ plan.product.name }}</strong>
 								</p>
 								<p class="fs-5">
@@ -31,14 +44,18 @@
 					{% endfor %}
 				</div>
 			</div>
-			<div class='mb-3 row justify-content-center'>
-				<div class="w-25">
-					<label for="eventDate" class="form-label">Pick a date</label>
-					<input type="text" name='eventDate' class="form-control" id="eventDate" data-min-date='{{ minDate|date('Y-m-d') }}' data-blocked-dates='["2023-05-27", "2023-05-28" ]'>
-				</div>
-				<div class="w-50">
-					<label for="eventZip" class="form-label">Choisir un code postal
-					</label>
+			<div class='row'>
+				<div class="d-flex flex-column flex-md-row mb-3 justify-content-between gap-3">
+					<div class="w-100 w-md-30">
+						<label for="eventDate" class="form-label">Pick a date</label>
+						<input type="text" name='eventDate' class="form-control" id="eventDate" data-min-date='{{ minDate }}' data-blocked-dates='{{ reservedDates }}'>
+					</div>
+					{% for date in reservedDates %}
+					<div>{{ date }}</div>
+					{% endfor %}
+					<div class="w-100 w-md-60">
+						<label for="eventZip" class="form-label">Choisir un code postal
+						</label>
 						<select class="form-control js-example-basic-single" aria-label="Default select example" name='eventZip' style="width: 100%; height: 38px">
 							<option value='' selected disabled></option>
 							{% for i in zipCodes %}
@@ -49,10 +66,40 @@
 								</option>
 							{% endfor %}
 						</select>
+					</div>
 				</div>
+			</div>
+			<div class='row mb-3'>
+				<div class="w-100">
+					<label for="eventAddress" class="form-label">Saisir une adresse</label>
+					<input type="text" name='eventAddress' class="form-control" id="eventAddress">
 				</div>
-				<div class='mb-3 row justify-content-center'>					
-				<button type="submit" class="btn btn-primary">Submit</button>
+			</div>
+			<div class='row mb-3'>
+				<div class="w-100">
+					<label for="eventAddressAddInfo" class="form-label">Saisir une information supplementaire</label>
+					<input type="text" name='eventAddressAddInfo' class="form-control" id="eventAddressAddInfo">
+				</div>
+			</div>
+			<div class='row mb-3'>
+				<label class="form-label">Type d'événement</label>
+				<div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+					{% for type in types %}
+						<input type="radio" class="btn-check" name='eventType' id="{{ type }}" autocomplete="off" value="{{ type }}">
+						<label class="btn btn-outline-success w-md-24" for="{{ type }}">
+							<p class='text-center fs-6 align-middle my-0'>
+								<strong>{{ type }}</strong>
+							</p>
+						</label>
+					{% endfor %}
+				</div>
+			</div>
+			<div class='row mb-3 mx-0 desactive-input overflow-hidden' id="suppTypeInput">
+				<label for="eventAddressAddInfo" class="form-label text-nowrap px-0">Preciser votre type d'événement</label>
+				<input type="text" name='eventAddressAddInfo' class="form-control" id="eventAddressAddInfo">
+			</div>
+			<div class='row justify-content-center mb-3'>
+				<button type="submit" class="btn btn btn-info w-75">Submit</button>
 			</div>
 		</form>
 	</div>

@@ -1,3 +1,4 @@
+import '../styles/select2.css'
 import $ from 'jquery'
 import 'select2'
 

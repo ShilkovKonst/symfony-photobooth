@@ -1,27 +1,28 @@
-@import "~bootstrap/dist/css/bootstrap.min.css";
-/* @import '~keen-slider/keen-slider.min.css';
-@import '~flatpickr/dist/flatpickr.min.css';
-@import "flatpickr.css";
-@import "keen-slider.css"; */
-@import "select2.css";
-@import "margin.css";
-@import "padding.css";
+@import './custom_scss/variables.scss';
+@import './custom_scss/utilities.scss';
+
+@import "~bootstrap/scss/bootstrap";
 
 body {
   min-width: 320px;
 }
-.select2-container .select2-selection--single,
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-  height: 38px;
+.section-uneven {
+  background-color: aquamarine;
 }
-.select2-container .select2-selection--single {
-  border: 1px solid #ced4da;
-  border-radius: 6px;
+.section-even {
+  background-color: aqua;
 }
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-  line-height:normal;
-  padding-left: 0;
+
+.active-input {
+  width: 100%;
+  transition: all 0.3s ease-in-out;
 }
+.desactive-input {
+  width: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+
 /* Style the video: 100% width and height to cover the entire window */
 @media screen and (min-width: 320px) {
   #carousel0 {
@@ -59,13 +60,6 @@ body {
   width: 100%;
 }
 
-.section-uneven {
-  background-color: aquamarine;
-}
-
-.section-even {
-  background-color: aqua;
-}
 
 /* Style the button used to pause/play the video */
 #myBtn {

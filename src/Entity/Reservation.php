@@ -66,11 +66,14 @@ class Reservation
     #[ORM\OneToOne(mappedBy: 'reservation', cascade: ['persist', 'remove'])]
     private ?Invoice $invoice = null;
 
-    #[ORM\Column]
-    private array $eventPlan = [];
+    #[ORM\Column(length: 255)]
+    private ?string $eventPlan = null;
 
     #[ORM\OneToMany(mappedBy: 'reservation', targetEntity: Image::class, orphanRemoval: true)]
     private Collection $images;
+
+    #[ORM\OneToOne(mappedBy: 'reservation', cascade: ['persist', 'remove'])]
+    private ?ReservedDates $reservedDates = null;
 
     public function __construct()
     {
@@ -279,12 +282,12 @@ class Reservation
         return $this;
     }
 
-    public function getEventPlan(): array
+    public function getEventPlan(): string
     {
         return $this->eventPlan;
     }
 
-    public function setEventPlan(array $eventPlan): self
+    public function setEventPlan(string $eventPlan): self
     {
         $this->eventPlan = $eventPlan;
 
@@ -317,6 +320,23 @@ class Reservation
                 $image->setReservation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getReservedDates(): ?ReservedDates
+    {
+        return $this->reservedDates;
+    }
+
+    public function setReservedDates(ReservedDates $reservedDates): self
+    {
+        // set the owning side of the relation if necessary
+        if ($reservedDates->getReservation() !== $this) {
+            $reservedDates->setReservation($this);
+        }
+
+        $this->reservedDates = $reservedDates;
 
         return $this;
     }

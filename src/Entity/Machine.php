@@ -28,12 +28,13 @@ class Machine
     #[ORM\Column]
     private ?bool $isAvailable = true;
 
-    #[ORM\Column(nullable: true)]
-    private array $reservedDates = [];
+    #[ORM\OneToMany(mappedBy: 'machine', targetEntity: ReservedDates::class)]
+    private Collection $reservedDates;
 
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
+        $this->reservedDates = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -107,14 +108,32 @@ class Machine
         return $this;
     }
 
-    public function getReservedDates(): array
+    /**
+     * @return Collection<int, ReservedDates>
+     */
+    public function getReservedDates(): Collection
     {
         return $this->reservedDates;
     }
 
-    public function setReservedDates(?array $reservedDates): self
+    public function addReservedDatesEntity(ReservedDates $reservedDatesEntity): self
     {
-        $this->reservedDates = $reservedDates;
+        if (!$this->reservedDates->contains($reservedDatesEntity)) {
+            $this->reservedDates->add($reservedDatesEntity);
+            $reservedDatesEntity->setMachine($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservedDatesEntity(ReservedDates $reservedDatesEntity): self
+    {
+        if ($this->reservedDates->removeElement($reservedDatesEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($reservedDatesEntity->getMachine() === $this) {
+                $reservedDatesEntity->setMachine(null);
+            }
+        }
 
         return $this;
     }

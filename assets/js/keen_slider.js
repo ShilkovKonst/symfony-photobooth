@@ -1,4 +1,4 @@
-import "./styles/keen-slider.css";
+import "../styles/keen-slider.css";
 import KeenSlider from "keen-slider";
 
 function navigation(slider) {

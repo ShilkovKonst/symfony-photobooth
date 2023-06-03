@@ -10,13 +10,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 
 class CreateReservationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('eventType', TextType::class)
+            ->add('eventType', RadioType::class)
             ->add('addEventType', TextType::class)
             ->add('isTermsAccepted', CheckboxType::class)
             ->add('eventCity', TextType::class)
