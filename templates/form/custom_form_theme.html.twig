@@ -1,0 +1,24 @@
+{% block choice_widget_expanded %}
+	{% if (id is defined and id|split('_')[2] == 'eventPlan') %}
+		<div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+			{% for child in form %}
+				<input autocomplete="off" type="{{ child.vars.block_prefixes[2] }}" class="btn-check" name="{{ full_name }}" value="{{ child.vars.value }}" id="{{ id }}_{{ loop.index0 }}" {% if required %} required {% endif %} {% if child.vars.value|split(' | ')[0] == vars.chosen_plan %} checked {% endif %}>
+				<label for="{{ id }}_{{ loop.index0 }}" class="btn w-md-30 text-center text-uppercase fs-5 fw-bold {% if child.vars.value|split(' | ')[0] == 'price_1N1Q9TLZMRT8NLs80ht56xPR' %} btn-outline-warning {% elseif child.vars.value|split(' | ')[0] == 'price_1N1Q8kLZMRT8NLs8xXXlFekd' %} btn-outline-secondary {% elseif child.vars.value|split(' | ')[0] == 'price_1N1Q6dLZMRT8NLs8vZ0ihFQG' %} btn-outline-primary {% endif %}">
+					{{ child.vars.value|split(' | ')[2] }}
+				</br>
+				{{ (child.vars.value|split(' | ')[1] / 100)|number_format(2, '.', ' ') ~ ' €' }}
+			</label>
+		{% endfor %}
+	</div>
+
+{% elseif (id is defined and id|split('_')[2] == 'eventType') %}
+	<div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+		{% for child in form %}
+			<input autocomplete="off" type="{{ child.vars.block_prefixes[2] }}" class="btn-check" name="{{ full_name }}" value="{{ child.vars.value }}" id="{{ id }}_{{ loop.index0 }}" {% if required %} required {% endif %}>
+			<label for="{{ id }}_{{ loop.index0 }}" class="btn btn-outline-success w-md-24 text-center fs-6 align-middle my-0  fw-bold">
+				{{ child.vars.value }}
+			</label>
+		{% endfor %}
+	</div>
+
+{% endif %}{% endblock %}

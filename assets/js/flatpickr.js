@@ -2,11 +2,11 @@ import '../styles/flatpickr.css'
 import flatpickr from "flatpickr";
 
 var blockedDates = Object.values(JSON.parse(
-  document.getElementById("eventDate").dataset.blockedDates
+  document.getElementById("create_reservation_eventDate").dataset.blockedDates
 ));
-var minDate = document.getElementById("eventDate").dataset.minDate;
+var minDate = document.getElementById("create_reservation_eventDate").dataset.minDate;
 
-  flatpickr("#eventDate", {
+  flatpickr("#create_reservation_eventDate", {
     allowInput: true,
     onOpen: function (selectedDates, dateStr, instance) {
       instance.input.readOnly = true;

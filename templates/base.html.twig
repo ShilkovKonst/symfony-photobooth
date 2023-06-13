@@ -16,6 +16,16 @@
     </head>
     <body>
         {% include "./layout/navbar.html.twig" %}
+        {% if app.user and app.user.isVerified == false  %}
+			<div class="alert alert-warning alert-dismissible mb-0" role="alert">
+				<button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+				<div class="alert-message">
+					<strong>Votre compte n'est pas activé</strong>,
+					{# <a href="{{ path('app_resend_verify') }}">renvoyer le lien d'activation</a> #}
+				</div>
+			</div>
+		{% endif %}
+		{% include "./layout/_flash.html.twig" %}
         {% block body %}{% endblock %}
     </body>
 </html>

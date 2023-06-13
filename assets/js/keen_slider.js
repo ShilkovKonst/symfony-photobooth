@@ -169,4 +169,3 @@ var slider3 = new KeenSlider(
   },
   []
 );
-// }

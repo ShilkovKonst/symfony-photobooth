@@ -5,6 +5,7 @@ import 'select2'
 $(function() {
   $('.js-example-basic-single').select2({
     // allowClear: true,
-    selectionCssClass: 'form-control'
+    selectionCssClass: 'form-control',
+    width: 'resolve'
   });
 });

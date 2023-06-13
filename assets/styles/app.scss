@@ -1,7 +1,23 @@
 @import './custom_scss/variables.scss';
 @import './custom_scss/utilities.scss';
+@import 'header.css';
 
 @import "~bootstrap/scss/bootstrap";
+
+:root {
+  --main_color_1: rgb(0, 128, 0);
+  --main_color_2: rgb(204, 154, 41);
+  --main_bg_color_1: rgba(0, 128, 0, 0.33);
+  --main_bg_color_11: rgba(0, 128, 0, 0.5);
+  --main_bg_color_111: rgba(0, 128, 0, 0.66);
+  --main_bg_color_1111: rgba(0, 128, 0, 0.99);
+  --main_bg_color_2: rgba(204, 154, 41, 0.33);
+  --main_bg_color_22: rgba(204, 154, 41, 0.5);
+  --main_bg_color_222: rgba(204, 154, 41, 0.66);
+  --main_bg_color_2222: rgba(204, 154, 41, 0.99);
+  --floreil-font-family: 'Roboto', sans-serif;
+  --bs-border-color: black;
+}
 
 body {
   min-width: 320px;

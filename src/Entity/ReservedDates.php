@@ -14,7 +14,7 @@ class ReservedDates
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'reservedDatesEntity')]
+    #[ORM\ManyToOne(inversedBy: 'reservedDates')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Machine $machine = null;
 
