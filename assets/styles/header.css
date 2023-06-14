@@ -2,120 +2,85 @@
 header {
   background: linear-gradient(
     to bottom,
-    var(--main_bg_color_2) 0%,
-    var(--main_bg_color_22) 100%
+    var(--main_bg_color_1111) 0%,
+    var(--main_bg_color_2222) 100%
   );
   background-size: auto 100%;
+  position: sticky;
+  top: 0;
+  z-index: 200;
 }
-#collapse_toggler_header {
-  color: var(--main_color_2);
-  background-color: var(--main_color_1);
-}
-#logo {
-    background: radial-gradient(ellipse at center, #ffffff75 0%, #cc9a2900 85%);
-  }
-.huge {
-  height: 52px;
-  width: 52px;
+.btn-header {
+  --bs-btn-bg: var(--main_bg_color_444);
+  --bs-btn-border-color: var(--main_bg_color_1111);
+  --bs-btn-hover-bg: radial-gradient(ellipse at center, var(--main_bg_color_1111) 0%, #cc9a2900 75%);
+  --bs-btn-hover-border-color: var(--main_bg_color_444);
+  --bs-btn-active-bg: radial-gradient(ellipse at center, var(--main_bg_color_1111) 0%, #cc9a2900 75%);
+  --bs-btn-active-border-color: var(--main_color_444);
 }
 
-
-.btn-header:active .navbar_text_shadow {
-    text-shadow: 1px 1px 2px pink;
-  }
-  
-  .dropdown .show .navbar_text_shadow {
-    text-shadow: 1px 1px 2px pink;
-  }
-  
-  .navbar_text_shadow {
-    text-shadow: 1px 1px 2px black;
-  }
-  
-  .bodybtn_text_shadow:active {
-    text-shadow: 1px 1px 2px black;
-  }
-  
-  .bodybtn_text_shadow {
-    text-shadow: 1px 1px 2px pink;
-  }
-  
-  .triangle::after {
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid var(--main_color_2);
-    /* You can change the color here */
-  }
-  
-  .triangle:active::after {
-    border-top: 10px solid var(--main_color_1);
-    /* You can change the color here */
-  }
-  
-  .show.triangle::after {
-    border-top: 10px solid var(--main_color_1);
-    /* You can change the color here */
-  }
-
-  .dropdown-content {
-    position: absolute;
-    /* background-color: #f9f9f9;
+.dropdown-content {
+  position: absolute;
+  /* background-color: #f9f9f9;
     margin-top: 10px;
     margin-left: 10px;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); */
-    z-index: 1001;
-  }
-  
-  .dropdown-menu {
-    z-index: 1001;
-    position: absolute;
-  }
-  
-  .dropdown-toggle::after {
-    display: flex;
-    align-self: center;
-  }
-  
-  .avatar_palceholder {
-    height: 10rem;
-    width: 10rem;
-  }
-  
-  .dropdown-item:hover,
-  .dropdown-item:focus {
-    /* color: var(--bs-dropdown-link-hover-color); */
-    background: linear-gradient(to right, var(--main_bg_color_222) 0%, var(--main_bg_color_111) 50%, var(--main_bg_color_222) 100%);
-  }
-  
-#collapse_toggler_header {
-    color: var(--main_color_2);
-    background-color: var(--main_color_1);
-  }
-  
-  .nav-link:hover,
-  .nav-link:focus {
-    text-decoration: underline;
-  }
+  z-index: 1001;
+}
 
-  .triangle-sup::after {
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid var(--main_color_1);
-    /* You can change the color here */
-  }
-  
-  .triangle-sup:active::after {
-    border-top: 10px solid var(--main_color_2);
-    /* You can change the color here */
-  }
-  
-  .show.triangle-sup::after {
-    border-top: 10px solid var(--main_color_2);
-    /* You can change the color here */
-  }  
+.dropdown-menu {
+  z-index: 1001;
+  position: absolute;
+}
+
+.dropdown-toggle::after {
+  display: flex;
+  align-self: center;
+}
+
+.avatar_placeholder {
+  height: 10rem;
+  width: 10rem;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  /* color: var(--bs-dropdown-link-hover-color); */
+  background: linear-gradient(
+    to right,
+    var(--main_bg_color_222) 0%,
+    var(--main_bg_color_111) 50%,
+    var(--main_bg_color_222) 100%
+  );
+}
+
+#collapse_toggler_header {
+  color: var(--main_color_2);
+  background-color: var(--main_color_1);
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  text-decoration: underline;
+}
+
+.triangle-sup::after {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid var(--main_color_1);
+  /* You can change the color here */
+}
+
+.triangle-sup:active::after {
+  border-top: 10px solid var(--main_color_2);
+  /* You can change the color here */
+}
+
+.show.triangle-sup::after {
+  border-top: 10px solid var(--main_color_2);
+  /* You can change the color here */
+}
 /* //________________// */

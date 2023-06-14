@@ -82,7 +82,6 @@ function navigation(slider) {
     updateClasses();
   });
   slider.on("optionsChanged", () => {
-    console.log(2);
     markup(true);
     markup();
     updateClasses();
@@ -95,7 +94,7 @@ function navigation(slider) {
   });
 }
 
-var slider1 = new KeenSlider(
+new KeenSlider(
   "#my-keen-slider-1",
   {
     loop: true,
@@ -119,15 +118,18 @@ var slider1 = new KeenSlider(
         },
       },
     },
+    created: () => {
+      console.log('created')
+    },
   },
   [navigation]
 );
-var slider2 = new KeenSlider(
+new KeenSlider(
   "#my-keen-slider-2",
   {
     loop: true,
     breakpoints: {
-      "(min-width: 1200px)": {
+      "(min-width: 768px)": {
         slides: {
           perView: 2,
           spacing: 10,
@@ -140,10 +142,13 @@ var slider2 = new KeenSlider(
         },
       },
     },
+    created: () => {
+      console.log('created')
+    },
   },
   [navigation]
 );
-var slider3 = new KeenSlider(
+new KeenSlider(
   "#my-keen-slider-3",
   {
     breakpoints: {
@@ -165,6 +170,9 @@ var slider3 = new KeenSlider(
           spacing: 0,
         },
       },
+    },
+    created: () => {
+      console.log('created')
     },
   },
   []

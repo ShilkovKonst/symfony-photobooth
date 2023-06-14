@@ -1,0 +1,111 @@
+
+.section-1 {
+    background: linear-gradient(
+      to bottom,
+      var(--main_bg_color_1111) 0%,
+      var(--main_bg_color_2222) 100%
+    );
+  }
+  .section-2 {
+    background: linear-gradient(
+      to bottom,
+      var(--main_bg_color_2222) 0%,
+      var(--main_bg_color_3333) 100%
+    );
+  }
+  .section-3 {
+    background: linear-gradient(
+      to bottom,
+      var(--main_bg_color_3333) 0%,
+      var(--main_bg_color_4444) 100%
+    );
+  }
+  .section-4 {
+    background: linear-gradient(
+      to bottom,
+      var(--main_bg_color_4444) 0%,
+      var(--main_bg_color_3333) 100%
+    );
+  }
+  .section-5 {
+    background: linear-gradient(
+      to bottom,
+      var(--main_bg_color_3333) 0%,
+      var(--main_bg_color_2222) 100%
+    );
+  }
+  .section-6 {
+    background: linear-gradient(
+      to bottom,
+      var(--main_bg_color_2222) 0%,
+      var(--main_bg_color_1111) 100%
+    );
+  }  
+  .active-input {
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+  }
+  .desactive-input {
+    width: 0;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Style the video: 100% width and height to cover the entire window */
+  @media screen and (min-width: 320px) {
+    #carousel0 {
+      height: 33vh;
+    }
+    .padding-section2 {
+      padding-top: 0;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    #carousel0 {
+      height: 66vh;
+    }
+    .padding-section2 {
+      padding-top: 0;
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    #carousel0 {
+      height: 75vh;
+    }
+    .padding-section2 {
+      padding-top: 6rem;
+    }
+  }
+  
+  #carouselExample {
+    height: 100%;
+  }
+  
+  /* Add some content at the bottom of the video/page */
+  .content {
+    bottom: 0;
+    color: #f1f1f1;
+    width: 100%;
+  }
+  
+  
+  /* Style the button used to pause/play the video */
+  #myBtn {
+    width: 200px;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  #myBtn:hover {
+    background: #ddd;
+    color: black;
+  }
+  
+  .icon-size {
+    width: 1rem;
+    height: 1rem;
+  }
+  

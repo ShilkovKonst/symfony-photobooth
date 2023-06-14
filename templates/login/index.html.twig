@@ -4,23 +4,32 @@
 {% endblock %}
 
 {% block body %}
-	<div class='container-fluid section-uneven py-7'>
+	<div class='container-fluid section-6 py-7'>
 		{% if error %}
 			<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 		{% endif %}
+		<div class="row">
+			<h2 class="d-flex flex-column align-items-center">
+				<strong>Se connecter</strong>
+			</h2>
+		</div>
 
-		<form action="{{ path('app_login') }}" method="post">
-			<label for="username">Email:</label>
-			<input type="text" id="username" name="_username" value="{{ last_username }}">
-			<label for="password">Password:</label>
-			<input type="password" id="password" name="_password">
+		<form action="{{ path('app_login') }}" method="post" class="vpx-5 vpx-md-15 vpx-lg-25 vpx-xxl-30">
+			<div class="mb-3">
+				<label for="username" class="form-label">Email:</label>
+				<input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}">
+			</div>
+			<div class="mb-3">
+				<label for="password" class="form-label">Password:</label>
+				<input type="password" class="form-control" id="password" name="_password">
+			</div>
 			<input
 			type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
 			{# If you want to control the URL the user is redirected to on success
-					        <input type="hidden" name="_target_path" value="/account"> #}
+								        <input type="hidden" name="_target_path" value="/account"> #}
 
-			<button type="submit">login</button>
+			<button type="submit" class="btn btn btn-info w-100 mt-3">login</button>
 		</form>
 	</div>
 {% endblock %}
