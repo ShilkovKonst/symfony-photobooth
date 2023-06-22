@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block body %}
-	<div class='container-fluid section-uneven py-7'>
+	<div class='container-fluid section-5 py-3'>
 		<div class="row">
 			<h2 class="d-flex flex-column align-items-center">
 				<p>
@@ -26,7 +26,7 @@
 				</p>
 			</h2>
 		</div>
-		{{ form_start(reservationForm, {'attr': {'class': 'vpx-5 vpx-md-15 vpx-lg-25 vpx-xxl-30', 'method': 'POST', 'action': 'path("app_make_reservation_submitted")'} }) }}
+		{{ form_start(reservationForm, {'attr': {'class': 'vpx-5 vpx-md-15 vpx-lg-25 vpx-xxl-30', 'method': 'POST'} }) }}
 		<div class='row mb-3'>
 			{{ form_widget(reservationForm.eventPlan, {
 				'theme': 'custom_form_theme.html.twig',

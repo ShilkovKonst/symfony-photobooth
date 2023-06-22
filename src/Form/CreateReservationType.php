@@ -33,7 +33,6 @@ class CreateReservationType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        // dd($this->zips);
         $builder
             ->add('eventPlan', ChoiceType::class, [
                 'expanded' => true,
@@ -49,9 +48,9 @@ class CreateReservationType extends AbstractType
                 'expanded' => true,
                 'choices' => ['0' => 'Mariage', '1' => 'Anniversaire', '2' => 'Soirée', '3' => 'Autre'],
             ])
-            ->add('addEventType', TextType::class)
+            ->add('addEventType', TextType::class, ['required' => false,])
             ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
+                // 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
                         'message' => 'You should agree to our terms.',

@@ -19,6 +19,9 @@ class Machine
     #[ORM\OneToMany(mappedBy: 'machine', targetEntity: Reservation::class)]
     private Collection $reservations;
 
+    #[ORM\OneToMany(mappedBy: 'machine', targetEntity: ReservedDates::class)]
+    private Collection $reservedDates;
+
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -27,9 +30,6 @@ class Machine
 
     #[ORM\Column]
     private ?bool $isAvailable = true;
-
-    #[ORM\OneToMany(mappedBy: 'machine', targetEntity: ReservedDates::class)]
-    private Collection $reservedDates;
 
     public function __construct()
     {
@@ -72,6 +72,36 @@ class Machine
         return $this;
     }
 
+    /**
+     * @return Collection<int, ReservedDates>
+     */
+    public function getReservedDates(): Collection
+    {
+        return $this->reservedDates;
+    }
+
+    public function addReservedDatesEntity(ReservedDates $reservedDatesEntity): self
+    {
+        if (!$this->reservedDates->contains($reservedDatesEntity)) {
+            $this->reservedDates->add($reservedDatesEntity);
+            $reservedDatesEntity->setMachine($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservedDatesEntity(ReservedDates $reservedDatesEntity): self
+    {
+        if ($this->reservedDates->removeElement($reservedDatesEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($reservedDatesEntity->getMachine() === $this) {
+                $reservedDatesEntity->setMachine(null);
+            }
+        }
+
+        return $this;
+    }
+
     public function getName(): ?string
     {
         return $this->name;
@@ -104,36 +134,6 @@ class Machine
     public function setIsAvailable(bool $isAvailable): self
     {
         $this->isAvailable = $isAvailable;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, ReservedDates>
-     */
-    public function getReservedDates(): Collection
-    {
-        return $this->reservedDates;
-    }
-
-    public function addReservedDatesEntity(ReservedDates $reservedDatesEntity): self
-    {
-        if (!$this->reservedDates->contains($reservedDatesEntity)) {
-            $this->reservedDates->add($reservedDatesEntity);
-            $reservedDatesEntity->setMachine($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReservedDatesEntity(ReservedDates $reservedDatesEntity): self
-    {
-        if ($this->reservedDates->removeElement($reservedDatesEntity)) {
-            // set the owning side to null (unless already changed)
-            if ($reservedDatesEntity->getMachine() === $this) {
-                $reservedDatesEntity->setMachine(null);
-            }
-        }
 
         return $this;
     }
