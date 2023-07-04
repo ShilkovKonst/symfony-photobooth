@@ -2,17 +2,13 @@
 
 namespace App\Form;
 
-use App\Entity\Reservation;
 use App\Service\StripeService;
 use App\Service\ZipCodesService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -50,7 +46,6 @@ class CreateReservationType extends AbstractType
             ])
             ->add('addEventType', TextType::class, ['required' => false,])
             ->add('agreeTerms', CheckboxType::class, [
-                // 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
                         'message' => 'You should agree to our terms.',

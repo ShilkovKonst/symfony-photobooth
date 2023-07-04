@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use DateTime;
 use App\Entity\User;
+use Stripe\StripeClient;
 use App\Entity\Reservation;
 use App\Entity\ReservedDates;
 use App\Service\StripeService;
@@ -19,6 +19,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MakeReservationController extends AbstractController
 {
+
+    // private $stripe;
+
+    // public function __construct()
+    // {
+    //     $this->stripe = new StripeClient($_ENV["STRIPE_SECRET_KEY"]);
+    // }
     #[Route('/choose-plan', name: 'app_choose_plan')]
     public function index(StripeService $stripe): Response
     {
@@ -34,19 +41,26 @@ class MakeReservationController extends AbstractController
         ReservedDatesService $reservedDates,
         Request $request,
         MachinesReservationsService $machineChecker,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
     ): Response {
         /** @var User $user  */
         $user = $this->getUser();
+        // if (empty($this->stripe->customers->all([
+        //     'email' => $user->getEmail(),
+        // ])->data)) {
+        //     dd('customer no', $this->stripe->customers->all(['email' => $user->getEmail()]));
+        // } else {
+        //     dd('customer yes', $this->stripe->customers->all(['email' => $user->getEmail()]));
+        // }
+
         $reservation = new Reservation;
         $reservationDates = new ReservedDates;
         $form = $this->createForm(CreateReservationType::class);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $machine = $machineChecker->checkMachinesDates($form->get('eventDate')->getData());
             if ($machine == null) {
-                $this->addFlash('danger', "There is no machine for the date ". $form->get('eventDate')->getData());
+                $this->addFlash('danger', "There is no machine for the date " . $form->get('eventDate')->getData());
                 return $this->redirectToRoute('app_make_reservation', [
                     'planId' => $planId,
                 ]);
@@ -65,7 +79,7 @@ class MakeReservationController extends AbstractController
             if ($form->get('eventAddressAddInfo')->getData() !== '') {
                 $reservation->setEventAddressAddInfo($form->get('eventAddressAddInfo')->getData());
             }
-            $reservation->setEventPlan($form->get('eventPlan')->getData());
+            $reservation->setEventPlan(explode(' | ', $form->get('eventPlan')->getData())[0]);
             $reservation->setIsTermsAccepted($form->get('agreeTerms')->getData());
             $reservation->setMachine($machine);
             $reservationDates->setReservation($reservation);
@@ -75,7 +89,7 @@ class MakeReservationController extends AbstractController
                 date_format($eventDate, 'Y-m-d'),
                 date_format($eventDate->modify('+1 days'), 'Y-m-d')
             ]);
-            
+
             $entityManager->persist($reservation);
             $entityManager->persist($reservationDates);
             $entityManager->flush();
@@ -92,21 +106,5 @@ class MakeReservationController extends AbstractController
             'types' => ['Mariage', 'Anniversaire', 'Soirée', 'Autre'],
             'reservationForm' => $form->createView(),
         ]);
-    }
-
-    #[Route('/make-reservation/submitted', name: 'app_make_reservation_submitted')]
-    public function ddZipAndCity(Request $request): Response
-    {
-        dd($request->request->get('eventDate'));
-        $date = strtotime($request->request->get('eventDate'));
-        $outputZipRaw = $request->request->get('eventZip');
-        $outputZip = explode(' ', $outputZipRaw);
-        $zip = $outputZip[0];
-        $city = $outputZip[2];
-        dd($zip, $city, $date);
-        return $this->render(
-            'main/index.html.twig'
-
-        );
     }
 }
