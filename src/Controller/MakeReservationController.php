@@ -99,7 +99,7 @@ class MakeReservationController extends AbstractController
         }
 
         return $this->render('reservation/make_reservation_form.html.twig', [
-            'zipCodes' => $zipCodes->getAllCodesPostaux(),
+            'zipCodes' => $zipCodes->getAllCodesPostauxRegion(),
             'reservedDates' => json_encode($reservedDates->getActualDates()),
             'minDate' => $reservedDates->getMinDate(),
             'chosen_plan' => $planId,

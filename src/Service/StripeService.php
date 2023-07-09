@@ -94,8 +94,7 @@ class StripeService
                 'address' => [
                     'city' => $user->getCity(),
                     'country' => 'FR',
-                    'line1' => $user->getStreet(),
-                    'line2' => $user->getBuildNumber(),
+                    'line1' => $user->getAddress(),
                     'postal_code' => $user->getZipCode()
                 ],
                 'metadata' => [

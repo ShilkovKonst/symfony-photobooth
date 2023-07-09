@@ -68,10 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $city = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $street = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $buildNumber = null;
+    private ?string $address = null;
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
@@ -327,26 +324,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getStreet(): ?string
+    public function getAddress(): ?string
     {
-        return $this->street;
+        return $this->address;
     }
 
-    public function setStreet(string $street): self
+    public function setAddress(string $address): self
     {
-        $this->street = $street;
-
-        return $this;
-    }
-
-    public function getBuildNumber(): ?string
-    {
-        return $this->buildNumber;
-    }
-
-    public function setBuildNumber(string $buildNumber): self
-    {
-        $this->buildNumber = $buildNumber;
+        $this->address = $address;
 
         return $this;
     }

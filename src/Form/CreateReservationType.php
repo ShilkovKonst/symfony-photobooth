@@ -24,7 +24,7 @@ class CreateReservationType extends AbstractType
         $this->plans = array_map(function ($plan) {
             return [$plan['product']['name'] => $plan['id'] . ' | ' . $plan['unit_amount'] . ' | ' . $plan['product']['name']];
         }, $this->stripe->getPlans());
-        $this->zips = $zips->getAllCodesPostaux();
+        $this->zips = $zips->getAllCodesPostauxRegion();
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
