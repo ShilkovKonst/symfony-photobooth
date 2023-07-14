@@ -33,14 +33,15 @@
 		{{ form_row(registrationForm.plainPassword, {
             label: 'Mot de passe'
         }) }}
-		<div class='row'>
-			<div class="d-flex flex-column flex-md-row mb-3 justify-content-between gap-3">
-				<div class="w-100 w-md-60">
-					<label for="eventZip" class="form-label">Choisir un code postal</label>
+		<div class='row mb-3'>
+			<div class="w-100 w-md-60">
+					<label for="eventZip" class="form-label">Choisir une ville</label>
 					{{ form_widget(registrationForm.zipCode, { 'attr': { 'class': 'js-data-example-ajax', 'style': 'width: 100%;'} }) }}					
 				</div>
-			</div>
 		</div>		
+		{{ form_row(registrationForm.address, {
+            label: 'Adresse'
+        }) }}
 		{{ form_row(registrationForm.agreeTerms) }}
 
 		<button type="submit" class="btn btn btn-info w-100">Register</button>

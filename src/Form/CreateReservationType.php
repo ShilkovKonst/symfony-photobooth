@@ -35,9 +35,7 @@ class CreateReservationType extends AbstractType
                 'choices' => $this->plans,
             ])
             ->add('eventDate', TextType::class)
-            ->add('eventZip', ChoiceType::class, [
-                'choices' => $this->zips,
-                ])
+            ->add('eventZip', ChoiceType::class)
             ->add('eventAddress', TextType::class)
             ->add('eventAddressAddInfo', TextType::class, ['required' => false,])
             ->add('eventType', ChoiceType::class, [
@@ -52,6 +50,10 @@ class CreateReservationType extends AbstractType
                     ]),
                 ],
             ]);
+        // prevent choice check for eventZip to avoid
+        //"Unable to reverse value for property path "[eventZip]": The choice "xxx" does not exist or is not unique."
+        //mistake
+        $builder->get('eventZip')->resetViewTransformers();
     }
 
     public function configureOptions(OptionsResolver $resolver): void

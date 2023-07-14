@@ -55,9 +55,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Regex(pattern: "/^(?:\+33|0)(?:\d{9}|\d{1,2}(?:\d{2}){3})$/", message: "The phone number '{{ value }}' is not a valid format.")]
     private ?string $mobTel = null;
 
-    #[ORM\Column]
-    private ?bool $isEmailVerified = false;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $avatar = null;
 
@@ -272,18 +269,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setMobTel(string $mobTel): self
     {
         $this->mobTel = $mobTel;
-
-        return $this;
-    }
-
-    public function isIsEmailVerified(): ?bool
-    {
-        return $this->isEmailVerified;
-    }
-
-    public function setIsEmailVerified(bool $isEmailVerified): self
-    {
-        $this->isEmailVerified = $isEmailVerified;
 
         return $this;
     }

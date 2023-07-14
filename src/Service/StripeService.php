@@ -32,8 +32,8 @@ class StripeService
         /** @var Reservation $reservation */
         $customer = $this->checkCustomer($user);
         $session = $this->stripe->checkout->sessions->create([
-            'success_url' => $_ENV['BASE_URL'] . '/choose-plan',
-            'cancel_url' => $_ENV['BASE_URL'] . '/',
+            'success_url' => $_ENV['BASE_URL'] . 'choose-plan',
+            'cancel_url' => $_ENV['BASE_URL'],
             'line_items' => [
                 [
                     'price' => $reservation->getEventPlan(),
@@ -76,8 +76,7 @@ class StripeService
                 ]
             ]
         ]);
-        dd($session);
-        return $session->url;
+        return $session;
     }
 
     private function checkCustomer($user)

@@ -15,17 +15,18 @@ use App\Service\MachinesReservationsService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MakeReservationController extends AbstractController
 {
+    private $session;
 
-    // private $stripe;
+    public function __construct(private RequestStack $requestStack)
+    {
+        $this->session = $requestStack->getSession();
+    }
 
-    // public function __construct()
-    // {
-    //     $this->stripe = new StripeClient($_ENV["STRIPE_SECRET_KEY"]);
-    // }
     #[Route('/choose-plan', name: 'app_choose_plan')]
     public function index(StripeService $stripe): Response
     {
@@ -37,22 +38,13 @@ class MakeReservationController extends AbstractController
     #[Route('/make-reservation/{planId}', name: 'app_make_reservation')]
     public function createReservation(
         $planId,
-        ZipCodesService $zipCodes,
         ReservedDatesService $reservedDates,
         Request $request,
         MachinesReservationsService $machineChecker,
-        EntityManagerInterface $entityManager,
+        StripeService $stripeService
     ): Response {
         /** @var User $user  */
         $user = $this->getUser();
-        // if (empty($this->stripe->customers->all([
-        //     'email' => $user->getEmail(),
-        // ])->data)) {
-        //     dd('customer no', $this->stripe->customers->all(['email' => $user->getEmail()]));
-        // } else {
-        //     dd('customer yes', $this->stripe->customers->all(['email' => $user->getEmail()]));
-        // }
-
         $reservation = new Reservation;
         $reservationDates = new ReservedDates;
         $form = $this->createForm(CreateReservationType::class);
@@ -65,8 +57,8 @@ class MakeReservationController extends AbstractController
                     'planId' => $planId,
                 ]);
             }
-            $eventDate = \DateTimeImmutable::createFromFormat('Y-m-d', $form->get('eventDate')->getData());
 
+            $eventDate = \DateTimeImmutable::createFromFormat('Y-m-d', $form->get('eventDate')->getData());
             $reservation->setEventDate($eventDate);
             $reservation->setUser($user);
             $reservation->setEventType($form->get('eventType')->getData());
@@ -89,22 +81,43 @@ class MakeReservationController extends AbstractController
                 date_format($eventDate, 'Y-m-d'),
                 date_format($eventDate->modify('+1 days'), 'Y-m-d')
             ]);
-
-            $entityManager->persist($reservation);
-            $entityManager->persist($reservationDates);
-            $entityManager->flush();
-
-            $this->addFlash('success', "Reservation est crée.");
-            return $this->redirectToRoute('app_main');
+            $this->session->set('reservation', $reservation);
+            $this->session->set('reservationDates', $reservationDates);
+            // $entityManager->persist($reservation);
+            // $entityManager->persist($reservationDates);
+            // $entityManager->flush();
+            // $this->addFlash('success', "Reservation est crée.");
+            return $this->redirect($stripeService->createSession($reservation, $user)->url);
         }
 
         return $this->render('reservation/make_reservation_form.html.twig', [
-            'zipCodes' => $zipCodes->getAllCodesPostauxRegion(),
             'reservedDates' => json_encode($reservedDates->getActualDates()),
             'minDate' => $reservedDates->getMinDate(),
             'chosen_plan' => $planId,
             'types' => ['Mariage', 'Anniversaire', 'Soirée', 'Autre'],
             'reservationForm' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/reservation-success', name: 'app_reservation_success')]
+    public function createReservationSuccess(
+        EntityManagerInterface $entityManager,
+    ): Response {
+        /** @var Reservation $reservation */
+        $reservation = $this->session->get('reservation');
+        $reservationDates = $this->session->get('reservationDates');
+
+        $reservation->isIsPaid(true);
+        $entityManager->persist($reservation);
+        $entityManager->persist($reservationDates);
+        $entityManager->flush();
+
+        $this->session->remove('reservation');
+        $this->session->remove('reservationDates');
+
+        $this->addFlash('success', "Reservation est crée.");
+        return $this->render('reservation/reservation_success.html.twig', [
+            'reservation' => $reservation
         ]);
     }
 }

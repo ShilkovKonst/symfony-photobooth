@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Validator\Constraints\Choice;
 
 class RegistrationFormType extends AbstractType
 {
@@ -74,8 +75,10 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('mobTel', TextType::class)
-            ->add('zipCode', ChoiceType::class, [])
-        ;
+            ->add('zipCode', ChoiceType::class)
+            ->add('address', TextType::class);
+
+        $builder->get('zipCode')->resetViewTransformers();
     }
 
     public function configureOptions(OptionsResolver $resolver): void
