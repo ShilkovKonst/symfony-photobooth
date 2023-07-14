@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ReservationController!
+{% endblock %}
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('flatpickr') }}
+	{{ encore_entry_link_tags('select2') }}
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('flatpickr') }}
+	{{ encore_entry_script_tags('select2') }}
+	{{ encore_entry_script_tags('eventTypePicker') }}
+{% endblock %}
+
+{% block body %}
+
+{% endblock %}
